@@ -2,6 +2,11 @@ package br.ufrn.imd.multiplicacaomatrizes.matrizes;
 
 import br.ufrn.imd.multiplicacaomatrizes.utils.AssertionUtils;
 
+/**
+ * Dimensão da matriz
+ *
+ * @author Aroldo Felix
+ */
 public class Dimensao {
     private final Integer linhas;
     private final Integer colunas;

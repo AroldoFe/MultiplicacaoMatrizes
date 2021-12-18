@@ -8,6 +8,11 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.stream.Collectors;
 
+/**
+ * Matriz
+ *
+ * @author Aroldo Felix
+ */
 public class Matriz {
     private final String nome;
     private final Dimensao dimensao;
@@ -42,13 +47,25 @@ public class Matriz {
         return matriz;
     }
 
-    protected boolean podeMultiplicar(Matriz outra) {
-        return this.getDimensao().getColunas().equals(outra.getDimensao().getLinhas());
+    /**
+     * Saber se a multiplicação de matrizes pode ocorrer
+     *
+     * @param outra - Outra matriz
+     * @return Se pode ocorrer a multiplicação
+     */
+    protected boolean isMultiplicacaoInvalida(Matriz outra) {
+        return !this.getDimensao().getColunas().equals(outra.getDimensao().getLinhas());
     }
 
+    /**
+     * Implementação de multiplicação sequencial
+     *
+     * @param outra - Outra matriz
+     * @return Matriz resultante de this x outra
+     */
     public Matriz multiplicarSequencial(Matriz outra) {
 
-        if (!this.podeMultiplicar(outra)) {
+        if (this.isMultiplicacaoInvalida(outra)) {
             final var dimensaoNaoSuportada = this.getDimensao().getColunas() + " <> " + outra.getDimensao().getLinhas();
             throw new IllegalArgumentException("Não é possível multiplicar as matrizes pois #Colunas de A <> #Linhas de B (" + dimensaoNaoSuportada + ")");
         }
@@ -76,9 +93,15 @@ public class Matriz {
         return Matriz.of(nomeMatrizFinal, qtdLinhas, qtdColunas, matrizDadosC);
     }
 
+    /**
+     * Implementação de multiplicação concorrente
+     *
+     * @param outra - Outra matriz
+     * @return Matriz resultante de this x outra
+     */
     public Matriz multiplicarConcorrente(Matriz outra) {
 
-        if (!this.podeMultiplicar(outra)) {
+        if (this.isMultiplicacaoInvalida(outra)) {
             final var dimensaoNaoSuportada = this.getDimensao().getColunas() + " <> " + outra.getDimensao().getLinhas();
             throw new IllegalArgumentException("Não é possível multiplicar as matrizes pois #Colunas de A <> #Linhas de B (" + dimensaoNaoSuportada + ")");
         }

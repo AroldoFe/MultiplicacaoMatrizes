@@ -1,5 +1,10 @@
 package br.ufrn.imd.multiplicacaomatrizes.enums;
 
+/**
+ * Identificador da multiplicação
+ *
+ * @author Aroldo Felix
+ */
 public enum TipoMultiplicacao {
     C("Concorrente"),
     S("Sequencial");
