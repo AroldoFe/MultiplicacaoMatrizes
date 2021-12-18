@@ -57,12 +57,20 @@ public class EscritaArquivo {
 
         final var appendOnFile = true;
 
+        final var url = ClassLoader.getSystemClassLoader().getResource("");
+
+        AssertionUtils.makeSure(url != null, "Diretório resources não encontrado");
+
+        final var pathToResource = url.getPath();
+
+        final var pathToFile = "saida/csv/registros.csv";
+
+        final var path = pathToResource + pathToFile;
+
+        AssertionUtils.makeSure(AssertionUtils.isNotEmpty(path), "Arquivo CSV não encontrado");
+
         try {
-            final var url = ClassLoader.getSystemResource("resources/saida/csv/registros.csv");
-
-            AssertionUtils.makeSure(url != null, "Arquivo CSV não encontrado");
-
-            final var fileWriter = new FileWriter(url.getPath(), appendOnFile);
+            final var fileWriter = new FileWriter(path, appendOnFile);
             bufferedWriter = new BufferedWriter(fileWriter);
         } catch (IOException e) {
             throw new RuntimeException("Caminho do arquivo não aceito", e.getCause());
