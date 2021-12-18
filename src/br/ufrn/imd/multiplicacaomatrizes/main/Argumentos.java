@@ -3,6 +3,7 @@ package br.ufrn.imd.multiplicacaomatrizes.main;
 import br.ufrn.imd.multiplicacaomatrizes.arquivo.LeituraArquivo;
 import br.ufrn.imd.multiplicacaomatrizes.enums.TipoMultiplicacao;
 import br.ufrn.imd.multiplicacaomatrizes.matrizes.Matriz;
+import br.ufrn.imd.multiplicacaomatrizes.utils.AssertionUtils;
 
 import java.util.List;
 
@@ -18,31 +19,28 @@ public class Argumentos {
     }
 
     public static Argumentos of(List<String> args) {
-        assert args != null && args.size() > 6 : "Argumentos vazios";
+        AssertionUtils.makeSure(args != null && args.size() > 1, "Argumentos insuficientes");
 
-        final int argumentoMatrizA = args.indexOf("-a");
-        assert argumentoMatrizA > 0 : "Argumento: Matriz A não encontrada";
+        final String tipoMultiplicacaoValue = args.get(args.size() - 1);
+        AssertionUtils.makeSure(tipoMultiplicacaoValue.matches("[CS]"), "Tipo de multiplicação não suportado");
 
-        final String pathMatrizA = args.get(argumentoMatrizA + 1);
-        assert !pathMatrizA.startsWith("-") : "Caminho da Matriz A inválido";
-
-        final int argumentoMatrizB = args.indexOf("-b");
-        assert argumentoMatrizB > 0 : "Argumento: Matriz B não encontrada";
-
-        final String pathMatrizB = args.get(argumentoMatrizB + 1);
-        assert !pathMatrizB.startsWith("-") : "Caminho da Matriz B inválido";
-
-        final int argumentoTipoMultiplicacao = args.indexOf("-t");
-        assert argumentoTipoMultiplicacao > 0 : "Argumento: Tipo da multiplicação não encontrado";
-
-        final String tipoMultiplicacaoValue = args.get(argumentoTipoMultiplicacao + 1);
-        assert tipoMultiplicacaoValue != null && tipoMultiplicacaoValue.length() == 1 : "Tipo da multiplicação não encontrado";
+        final var matrizA = recuperarMatriz("A", args);
+        final var matrizB = recuperarMatriz("B", args);
 
         final var tipoMultiplicacao = TipoMultiplicacao.valueOf(tipoMultiplicacaoValue);
-        final var matrizA = LeituraArquivo.ler(pathMatrizA);
-        final var matrizB = LeituraArquivo.ler(pathMatrizB);
-
         return new Argumentos(matrizA, matrizB, tipoMultiplicacao);
+    }
+
+    private static Matriz recuperarMatriz(String matrizId, List<String> args) {
+        final String tamanhoMatriz = args.get(args.size() - 2);
+        AssertionUtils.makeSure(tamanhoMatriz.matches("[0-9]+"), "Tamanho inválido da matriz");
+
+        final var urlMatriz = ClassLoader.getSystemResource("entrada/matrizes/" + matrizId + tamanhoMatriz + "x" + tamanhoMatriz + ".txt");
+
+        AssertionUtils.makeSure(urlMatriz != null, "Matriz " + matrizId + " não encontrada");
+
+        return LeituraArquivo.ler(urlMatriz.getPath());
+
     }
 
     public Matriz getMatrizA() {
