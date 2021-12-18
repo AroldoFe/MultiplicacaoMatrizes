@@ -19,8 +19,11 @@ public class Matriz {
     private final Integer[][] matriz;
 
     private Matriz(String nome, Dimensao dimensao, Integer[][] matriz) {
-        AssertionUtils.makeSure(matriz != null, "Matriz não pode ser nula");
+        AssertionUtils.makeSure(AssertionUtils.isNotEmpty(matriz), "Matriz não pode ser nula");
+        AssertionUtils.makeSure(AssertionUtils.isNotEmpty(dimensao), "Dimensão não pode ser nula");
         AssertionUtils.makeSure(AssertionUtils.isNotEmpty(nome), "Defina um nome para a matriz");
+        AssertionUtils.makeSure(dimensao.getLinhas() == matriz.length, "Quantidade de linhas diferentes da dimensão");
+        AssertionUtils.makeSure(dimensao.getColunas() == matriz[0].length, "Quantidade de linhas diferentes da dimensão");
 
         this.nome = nome;
         this.dimensao = dimensao;
@@ -82,7 +85,7 @@ public class Matriz {
             for (int j = 0; j < qtdColunas; j++) {
                 var soma = 0;
                 for (int k = 0; k < kMaximo; k++) {
-                    soma += matrizDadosA[i][k] + matrizDadosB[k][j];
+                    soma += matrizDadosA[i][k] * matrizDadosB[k][j];
                 }
                 matrizDadosC[i][j] = soma;
             }

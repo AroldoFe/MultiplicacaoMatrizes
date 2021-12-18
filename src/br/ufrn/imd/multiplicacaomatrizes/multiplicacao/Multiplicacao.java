@@ -53,7 +53,7 @@ public class Multiplicacao extends Thread {
         for (int j = 0; j < jMaximo; j++) {
             var soma = 0;
             for (int k = 0; k < kMaximo; k++) {
-                soma += matrizA[indice][k] + matrizB[k][j];
+                soma += matrizA[indice][k] * matrizB[k][j];
             }
             this.resultante[indice][j] = soma;
         }

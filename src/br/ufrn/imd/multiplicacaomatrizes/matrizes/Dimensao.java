@@ -13,7 +13,7 @@ public class Dimensao {
 
     private Dimensao(Integer linhas, Integer colunas) {
         AssertionUtils.makeSure(linhas != null && linhas.compareTo(0) > 0, "Quantidade de linhas tem que ser maior que 0");
-        AssertionUtils.makeSure(colunas != null && !colunas.equals(0), "Quantidade de linhas tem que ser maior que 0");
+        AssertionUtils.makeSure(colunas != null && colunas.compareTo(0) > 0, "Quantidade de linhas tem que ser maior que 0");
 
         this.linhas = linhas;
         this.colunas = colunas;

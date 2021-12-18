@@ -33,6 +33,14 @@ public class AssertionUtils {
             return ((String) object).length() > 0;
         }
 
+        if (object instanceof Object[][]) {
+            return ((Object[][]) object).length > 0 && ((Object[][]) object)[0].length > 0;
+        }
+
+        if (object instanceof Object[]) {
+            return ((Object[]) object).length > 0;
+        }
+
         if (object instanceof Collection) {
             return ((Collection<?>) object).size() > 0;
         }
