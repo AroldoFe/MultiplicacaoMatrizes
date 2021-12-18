@@ -10,6 +10,7 @@ public class Main {
     private static final int MAXIMA_VEZES_EXECUCAO = 20;
 
     public static void main(String[] args) {
+        System.out.println("Recuperando argumentos");
         Argumentos argumentos = Argumentos.of(List.of(args));
 
         Matriz matrizA = argumentos.getMatrizA();
@@ -20,9 +21,11 @@ public class Main {
         TipoMultiplicacao tipoMultiplicacao = argumentos.getTipoMultiplicacao();
 
         for (int i = 0; i < MAXIMA_VEZES_EXECUCAO; i++) {
+            System.out.println("Iterando pela " + i + "-ésima vez");
             final Matriz matrizResultante;
 
             long tempoInicial = System.nanoTime();
+            System.out.println("Multiplicando matrízes");
             if (tipoMultiplicacao == TipoMultiplicacao.C) {
                 matrizResultante = matrizA.multiplicarConcorrente(matrizB);
             } else {
@@ -33,13 +36,15 @@ public class Main {
             final var matrizANome = matrizA.getNome() + matrizA.getDimensao().toString("x");
             final var matrizBNome = matrizB.getNome() + matrizB.getDimensao().toString("x");
 
-            EscritaArquivo.registrarCSV(matrizANome, matrizBNome, i, tempoFinalSegundos);
+            System.out.println("Registrando CSV");
+            EscritaArquivo.registrarCSV(matrizANome, matrizBNome, tipoMultiplicacao, i, tempoFinalSegundos);
 
             if (matrizC == null) {
                 matrizC = matrizResultante;
             }
         }
 
+        System.out.println("Registrando resultado da multiplicação");
         EscritaArquivo.escrever(matrizC, tipoMultiplicacao);
     }
 }

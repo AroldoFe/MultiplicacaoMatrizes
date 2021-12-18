@@ -1,8 +1,11 @@
 package br.ufrn.imd.multiplicacaomatrizes.matrizes;
 
+import br.ufrn.imd.multiplicacaomatrizes.multiplicacao.Multiplicacao;
 import br.ufrn.imd.multiplicacaomatrizes.utils.AssertionUtils;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.stream.Collectors;
 
 public class Matriz {
@@ -75,7 +78,38 @@ public class Matriz {
 
     public Matriz multiplicarConcorrente(Matriz outra) {
 
-        return null;
+        if (!this.podeMultiplicar(outra)) {
+            final var dimensaoNaoSuportada = this.getDimensao().getColunas() + " <> " + outra.getDimensao().getLinhas();
+            throw new IllegalArgumentException("Não é possível multiplicar as matrizes pois #Colunas de A <> #Linhas de B (" + dimensaoNaoSuportada + ")");
+        }
+
+        final var qtdLinhas = this.getDimensao().getLinhas();
+        final var qtdColunas = outra.getDimensao().getColunas();
+
+        final var matrizDadosC = new Integer[qtdLinhas][qtdColunas];
+
+
+        Collection<Thread> threads = new ArrayList<>();
+
+        // Calculando a linha
+        for (int i = 0; i < qtdLinhas; i++) {
+            Thread executante = Multiplicacao.of(this, outra, matrizDadosC, i);
+            threads.add(executante);
+            executante.start();
+        }
+
+        // Esperando todas as threads executarem
+        threads.forEach(thread -> {
+            try {
+                thread.join();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        });
+
+        final var nomeMatrizFinal = "C";
+
+        return Matriz.of(nomeMatrizFinal, qtdLinhas, qtdColunas, matrizDadosC);
     }
 
     @Override

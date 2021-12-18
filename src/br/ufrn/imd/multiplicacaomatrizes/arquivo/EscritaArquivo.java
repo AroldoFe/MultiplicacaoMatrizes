@@ -52,7 +52,7 @@ public class EscritaArquivo {
         }
     }
 
-    public static void registrarCSV(String matrizA, String matrizB, int iteracao, long milisegundos) {
+    public static void registrarCSV(String matrizA, String matrizB, TipoMultiplicacao tipoMultiplicacao, int iteracao, long milisegundos) {
         BufferedWriter bufferedWriter;
 
         final var appendOnFile = true;
@@ -78,7 +78,7 @@ public class EscritaArquivo {
 
         CSVWriter csvWriter = new CSVWriter(bufferedWriter);
 
-        final var dados = new String[]{matrizA, matrizB, Integer.toString(iteracao), Long.toString(milisegundos)};
+        final var dados = new String[]{matrizA, matrizB, tipoMultiplicacao.name(), Integer.toString(iteracao), Long.toString(milisegundos)};
 
         csvWriter.writeNext(dados);
 
