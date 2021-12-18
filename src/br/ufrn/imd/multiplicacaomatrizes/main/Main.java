@@ -22,13 +22,13 @@ public class Main {
         for (int i = 0; i < MAXIMA_VEZES_EXECUCAO; i++) {
             final Matriz matrizResultante;
 
-            long tempoInicial = System.currentTimeMillis();
+            long tempoInicial = System.nanoTime();
             if (tipoMultiplicacao == TipoMultiplicacao.C) {
                 matrizResultante = matrizA.multiplicarConcorrente(matrizB);
             } else {
                 matrizResultante = matrizA.multiplicarSequencial(matrizB);
             }
-            long tempoFinalSegundos = (System.currentTimeMillis() - tempoInicial);
+            long tempoFinalSegundos = (System.nanoTime() - tempoInicial);
 
             final var matrizANome = matrizA.getNome() + matrizA.getDimensao().toString("x");
             final var matrizBNome = matrizB.getNome() + matrizB.getDimensao().toString("x");
