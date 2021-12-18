@@ -11,8 +11,19 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 
+/**
+ * Classe responsável por escrever matriz em TXT e registrar dados no CSV
+ *
+ * @author Aroldo Felix
+ */
 public class EscritaArquivo {
 
+    /**
+     * Escrever matriz em um arquivo
+     *
+     * @param matriz            - Matriz a ser salva no arquivo
+     * @param tipoMultiplicacao - Tipo da multiplicação (Sequencial ou Concorrente)
+     */
     public static void escrever(Matriz matriz, TipoMultiplicacao tipoMultiplicacao) {
         final BufferedWriter buffWrite;
         final Dimensao dimensao = matriz.getDimensao();
@@ -26,6 +37,7 @@ public class EscritaArquivo {
 
         final var pathToFile = "saida/matrizes/" + tipoMultiplicacao.getDescricao() + "/" + matriz.getNome() + dimensao.getLinhas() + "x" + dimensao.getColunas();
 
+        // Caminho final para o arquivo
         final var path = pathToResource + pathToFile;
 
         File file = new File(path);
@@ -52,6 +64,15 @@ public class EscritaArquivo {
         }
     }
 
+    /**
+     * Registrar dados da multiplicação no CSV
+     *
+     * @param matrizA           - Identificador da matriz A
+     * @param matrizB           - Identificador da matriz B
+     * @param tipoMultiplicacao - Tipo da multiplicação (Sequencial ou Concorrente)
+     * @param iteracao          - Iteração no momento
+     * @param milisegundos      - Tempo demorado em milisegundos
+     */
     public static void registrarCSV(String matrizA, String matrizB, TipoMultiplicacao tipoMultiplicacao, int iteracao, long milisegundos) {
         BufferedWriter bufferedWriter;
 

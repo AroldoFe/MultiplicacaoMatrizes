@@ -3,6 +3,11 @@ package br.ufrn.imd.multiplicacaomatrizes.multiplicacao;
 import br.ufrn.imd.multiplicacaomatrizes.matrizes.Matriz;
 import br.ufrn.imd.multiplicacaomatrizes.utils.AssertionUtils;
 
+/**
+ * Classe responsável pela geração de uma linha da multiplicação de matrizes
+ *
+ * @author Aroldo Felix
+ */
 public class Multiplicacao extends Thread {
     private final Matriz a;
     private final Matriz b;
@@ -17,6 +22,15 @@ public class Multiplicacao extends Thread {
         this.indice = indice;
     }
 
+    /**
+     * Criação multiplicação de de AxB na linha indice
+     *
+     * @param a          - Matriz A
+     * @param b          - Matriz B
+     * @param resultante - Resultado da linha[indice] de AxB
+     * @param indice     - Linha a ser gerada
+     * @return Multiplicação
+     */
     public static Multiplicacao of(Matriz a, Matriz b, Integer[][] resultante, int indice) {
         AssertionUtils.makeSure(AssertionUtils.isNotEmpty(a), "Matriz A nula");
         AssertionUtils.makeSure(AssertionUtils.isNotEmpty(b), "Matriz B nula");

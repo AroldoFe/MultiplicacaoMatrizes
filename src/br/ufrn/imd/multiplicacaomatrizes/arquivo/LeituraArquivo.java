@@ -11,8 +11,20 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * Classe responsável por ler a matriz de um TXT
+ *
+ * @author Aroldo Felix
+ */
 public class LeituraArquivo {
 
+    /**
+     * Recuperar a matriz de um arquivo
+     *
+     * @param nome - Nome do arquivo
+     * @param path - Caminho do arquivo
+     * @return Matriz
+     */
     public static Matriz ler(String nome, String path) {
         final BufferedReader buffRead;
         try {
@@ -51,6 +63,12 @@ public class LeituraArquivo {
         }
     }
 
+    /**
+     * Recuperando a dimensão da matriz
+     *
+     * @param linha - Primeira linha do arquivo
+     * @return Dimensão da matriz
+     */
     private static Dimensao recuperarDimensao(String linha) {
         final String separador = " ";
 
