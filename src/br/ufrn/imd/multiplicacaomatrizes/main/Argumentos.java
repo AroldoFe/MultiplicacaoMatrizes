@@ -30,7 +30,7 @@ public class Argumentos {
      * @return Argumentos gerados
      */
     public static Argumentos of(List<String> args) {
-        AssertionUtils.makeSure(args != null && args.size() > 1, "Argumentos insuficientes");
+        AssertionUtils.makeSure(args != null && args.size() == 2, "Argumentos insuficientes/mais do que suficientes");
 
         final String tipoMultiplicacaoValue = args.get(args.size() - 1);
         AssertionUtils.makeSure(tipoMultiplicacaoValue.matches("[CS]"), "Tipo de multiplicação não suportado");
