@@ -2,6 +2,7 @@ package br.ufrn.imd.multiplicacaomatrizes.arquivo;
 
 import br.ufrn.imd.multiplicacaomatrizes.matrizes.Dimensao;
 import br.ufrn.imd.multiplicacaomatrizes.matrizes.Matriz;
+import br.ufrn.imd.multiplicacaomatrizes.utils.AssertionUtils;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -12,7 +13,7 @@ import java.util.stream.Collectors;
 
 public class LeituraArquivo {
 
-    public static Matriz ler(String path) {
+    public static Matriz ler(String nome, String path) {
         final BufferedReader buffRead;
         try {
             final var fileReader = new FileReader(path);
@@ -32,7 +33,7 @@ public class LeituraArquivo {
             for (int linha = 0; linha < dimensao.getLinhas(); linha++) {
                 // Recuperar Linha
                 final var linhaConcatenada = buffRead.readLine();
-                assert linhaConcatenada != null : "Matriz não possui quantidade de linhas definida na dimensão";
+                AssertionUtils.makeSure(linhaConcatenada != null, "Matriz não possui quantidade de linhas definida na dimensão");
 
                 final var dadosLinha = linhaConcatenada.split(" ");
 
@@ -43,7 +44,7 @@ public class LeituraArquivo {
 
             buffRead.close();
 
-            return Matriz.of(dimensao, dadosMatriz);
+            return Matriz.of(nome, dimensao, dadosMatriz);
         } catch (IOException e) {
             e.printStackTrace();
             return null;
@@ -53,16 +54,16 @@ public class LeituraArquivo {
     private static Dimensao recuperarDimensao(String linha) {
         final String separador = " ";
 
-        assert linha != null : "Dimensão não pode ser nula";
-        assert linha.length() >= 3 : "É necessário pelo menos 3 elementos";
-        assert linha.contains(separador) : "Separador não encontrado";
+        AssertionUtils.makeSure(linha != null, "Dimensão não pode ser nula");
+        AssertionUtils.makeSure(linha.length() >= 3, "É necessário pelo menos 3 elementos");
+        AssertionUtils.makeSure(linha.contains(separador), "Separador não encontrado");
 
         final List<Integer> dimensao = Arrays
                 .stream(linha.split(separador))
                 .map(Integer::parseInt)
                 .collect(Collectors.toList());
 
-        assert dimensao.size() == 2 : "A dimensão deve conter quantidade de linhas e colunas";
+        AssertionUtils.makeSure(dimensao.size() == 2, "A dimensão deve conter quantidade de linhas e colunas");
 
         return Dimensao.of(dimensao.get(0), dimensao.get(1));
     }
