@@ -6,4 +6,16 @@ public class AssertionUtils {
             throw new IllegalArgumentException(message);
         }
     }
+
+    public static boolean isNotEmpty(Object object) {
+        if (object == null) {
+            return false;
+        }
+
+        if (object instanceof String) {
+            return ((String) object).length() > 0;
+        }
+
+        return true;
+    }
 }

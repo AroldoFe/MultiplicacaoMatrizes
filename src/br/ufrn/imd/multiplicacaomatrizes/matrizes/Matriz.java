@@ -6,22 +6,29 @@ import java.util.Arrays;
 import java.util.stream.Collectors;
 
 public class Matriz {
+    private final String nome;
     private final Dimensao dimensao;
     private final Integer[][] matriz;
 
-    protected Matriz(Dimensao dimensao, Integer[][] matriz) {
+    private Matriz(String nome, Dimensao dimensao, Integer[][] matriz) {
         AssertionUtils.makeSure(matriz != null, "Matriz não pode ser nula");
+        AssertionUtils.makeSure(AssertionUtils.isNotEmpty(nome), "Defina um nome para a matriz");
 
+        this.nome = nome;
         this.dimensao = dimensao;
         this.matriz = matriz;
     }
 
-    public static Matriz of(Integer linhas, Integer colunas, Integer[][] matriz) {
-        return of(Dimensao.of(linhas, colunas), matriz);
+    public static Matriz of(String nome, Integer linhas, Integer colunas, Integer[][] matriz) {
+        return of(nome, Dimensao.of(linhas, colunas), matriz);
     }
 
-    public static Matriz of(Dimensao dimensao, Integer[][] matriz) {
-        return new Matriz(dimensao, matriz);
+    public static Matriz of(String nome, Dimensao dimensao, Integer[][] matriz) {
+        return new Matriz(nome, dimensao, matriz);
+    }
+
+    public String getNome() {
+        return nome;
     }
 
     public Dimensao getDimensao() {
@@ -61,7 +68,9 @@ public class Matriz {
             }
         }
 
-        return Matriz.of(qtdLinhas, qtdColunas, matrizDadosC);
+        final var nomeMatrizFinal = "C";
+
+        return Matriz.of(nomeMatrizFinal, qtdLinhas, qtdColunas, matrizDadosC);
     }
 
     public Matriz multiplicarConcorrente(Matriz outra) {

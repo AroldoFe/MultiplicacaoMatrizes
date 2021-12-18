@@ -37,9 +37,9 @@ public class Argumentos {
 
         final var urlMatriz = ClassLoader.getSystemResource("entrada/matrizes/" + matrizId + tamanhoMatriz + "x" + tamanhoMatriz + ".txt");
 
-        AssertionUtils.makeSure(urlMatriz != null, "Matriz " + matrizId + " não encontrada");
+        AssertionUtils.makeSure(AssertionUtils.isNotEmpty(urlMatriz), "Matriz " + matrizId + " não encontrada");
 
-        return LeituraArquivo.ler(urlMatriz.getPath());
+        return LeituraArquivo.ler(matrizId, urlMatriz.getPath());
 
     }
 
